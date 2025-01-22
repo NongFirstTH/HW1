@@ -62,3 +62,9 @@ width, height, maxGrayLevel, pixels = readPGM(filepath)
 
 histogram = createHistogram(pixels, maxGrayLevel)
 print(histogram)
+print(histogram.index(4969))
+print(histogram.index(4956))
+print(histogram.index(7529))
+print(histogram.index(3460))
+print(histogram.index(4955))
+# 4969, 4956, 7529, 3460, 4955

@@ -165,7 +165,6 @@ def writePixelsToPGM(filePathOutput , width, height, maxGrayLevel, pixels):
     header = ["P5", str(width)+" "+str(height), str(maxGrayLevel)]
     pixels2Dto1D = bytes(sum(pixels, []))
     pixels = pixels2Dto1D
-    print(pixels)
     writePGM(filePathOutput, header, pixels)
     
 def showHistogram(filePath, inputHistogram, equalization, outputHistogram):
@@ -198,32 +197,45 @@ def showHistogram(filePath, inputHistogram, equalization, outputHistogram):
     plt.plot(outputHistogram)
     plt.show()
 
-# main
-filePathIn1 = "in/Cameraman.pgm"
-filePathOut1 = "out/CameramanOut.pgm"
+# # main
+# filePathIn1 = "in/Cameraman.pgm"
+# filePathOut1 = "out/CameramanOut.pgm"
 
-# read pgm file
-width1, height1, maxGrayLevel1, pixels1 = readPGM(filePathIn1)
+# # read pgm file
+# width1, height1, maxGrayLevel1, pixels1 = readPGM(filePathIn1)
 
-# perform histogram equalization
-inputHistogram1 = np.array(createHistogram(pixels1, maxGrayLevel1))
-outputHistogram1, equalization1 = pointOperate(inputHistogram1,  width1, height1, maxGrayLevel1)
-mapColor(pixels1, width1, height1, equalization1)
+# # perform histogram equalization
+# inputHistogram1 = np.array(createHistogram(pixels1, maxGrayLevel1))
+# outputHistogram1, equalization1 = pointOperate(inputHistogram1,  width1, height1, maxGrayLevel1)
+# mapColor(pixels1, width1, height1, equalization1)
 
-# write pgm file
-writePixelsToPGM(filePathOut1 , width1, height1, maxGrayLevel1, pixels1)
+# # write pgm file
+# writePixelsToPGM(filePathOut1 , width1, height1, maxGrayLevel1, pixels1)
 
-showHistogram(filePathIn1, inputHistogram1, equalization1, outputHistogram1)
+# showHistogram(filePathIn1, inputHistogram1, equalization1, outputHistogram1)
+
+# # perform second image
+# filePathIn2 = "in/SEM256_256.pgm"
+# filePathOut2 = "out/SEM256_256Out.pgm"
+
+# width2, height2, maxGrayLevel2, pixels2 = readPGM(filePathIn2)
+
+# inputHistogram2 = np.array(createHistogram(pixels2, maxGrayLevel2))
+# outputHistogram2, equalization2 = pointOperate(inputHistogram2, width2, height2, maxGrayLevel2)
+# mapColor(pixels2, width2, height2, equalization2)
+
+# writePixelsToPGM(filePathOut2, width2, height2, maxGrayLevel2, pixels2)
+# showHistogram(filePathIn2, inputHistogram2, equalization2, outputHistogram2)
 
 # perform second image
-filePathIn2 = "in/SEM256_256.pgm"
-filePathOut2 = "out/SEM256_256Out.pgm"
+filePathIn3 = "in/62877.pgm"
+filePathOut3 = "out/62865Out.pgm"
 
-width2, height2, maxGrayLevel2, pixels2 = readPGM(filePathIn2)
+width3, height3, maxGrayLevel3, pixels3 = readPGM(filePathIn3)
 
-inputHistogram2 = np.array(createHistogram(pixels2, maxGrayLevel2))
-outputHistogram2, equalization2 = pointOperate(inputHistogram2, width2, height2, maxGrayLevel2)
-mapColor(pixels2, width2, height2, equalization2)
+inputHistogram3 = np.array(createHistogram(pixels3, maxGrayLevel3))
+outputHistogram3, equalization3 = pointOperate(inputHistogram3, width3, height3, maxGrayLevel3)
+mapColor(pixels3, width3, height3, equalization3)
 
-writePixelsToPGM(filePathOut2, width2, height2, maxGrayLevel2, pixels2)
-showHistogram(filePathIn2, inputHistogram2, equalization2, outputHistogram2)
+writePixelsToPGM(filePathOut3, width3, height3, maxGrayLevel3, pixels3)
+showHistogram(filePathIn3, inputHistogram3, equalization3, outputHistogram3)

@@ -1,17 +1,15 @@
-import numpy as np
-# header = ["P5", str(256)+" "+str(256), str(255)]
-# file = open('test.pgm', "wb")
-# file.write("\n".join(header).encode() + b"\n")
-# file.write(bytes([255]))
-def f(i):
-    i[0][0] = -1
+import cv2
 
-def i():
-    return [[255,255,255]]
+# Load the input image
+im = cv2.imread("in/scaled_shapes.jpg")
 
-# i = [[255,255,255]]
-# i[0][0] = 0
-# f(i)
-f(i())
+# Convert the image to grayscale
+gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
-print(i())
+# Threshold the grayscale image
+_, thresh = cv2.threshold(gray, 128, 255, cv2.THRESH_BINARY)
+
+# Compute moments on the thresholded image
+moments = cv2.moments(thresh)
+
+print(moments['nu02']+moments['nu20'])

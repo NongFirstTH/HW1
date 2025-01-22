@@ -37,45 +37,54 @@ def readPGM(filepath):
 
     return width, height, maxGrayLevel, pixels
 
-def pqMoment(pixels, p, q, width, height):
+def pqMoment(pixels, p, q, width, height, color):
     moment = 0
 
     for x in range(height):
         for y in range(width):
-            moment += x**p * y**q * pixels[x][y]
+            if pixels[x][y] == color:
+                moment += x**p * y**q
 
     return moment
 
-def centralMoments(pixels, p, q, width, height):
+def centralMoments(pixels, p, q, width, height, color):
     moment = 0
-    m10 = pqMoment(pixels, 1, 0, width, height)
-    m01 = pqMoment(pixels, 0, 1, width, height)
-    m00 = pqMoment(pixels, 0, 0, width, height)
+    m10 = pqMoment(pixels, 1, 0, width, height, color)
+    m01 = pqMoment(pixels, 0, 1, width, height, color)
+    m00 = pqMoment(pixels, 0, 0, width, height, color)
     xQuantity = m10 / m00
-    yQuantity = m01 / m00
+    yQuantity = m01 / m00   
     
     for x in range(height):
         for y in range(width):
-            moment += (x - xQuantity)**p * (y - yQuantity)**q * pixels[x][y]
+            if pixels[x][y] == color:
+                moment += (x - xQuantity)**p * (y - yQuantity)**q
 
     return moment
 
-def normalizedMoments(pixels, p, q, width, height):
-    moment = 0
-    MUpq = centralMoments(pixels, p, q, width, height)
-    MU00 = centralMoments(pixels, 0, 0, width, height)
-    moment = MUpq / (MU00**((p+q)/2 + 1))
+def normalizedMoments(pixels, p, q, width, height, color):
+    mupq = centralMoments(pixels, p, q, width, height, color)
+    mu00 = centralMoments(pixels, 0, 0, width, height, color)
+    moment = mupq / (mu00**((p+q)/2 + 1))
 
     return moment
 
-def quantity(centralMoment20, centralMoment02):
+def phi1(centralMoment20, centralMoment02):
     return centralMoment20 + centralMoment02
 
 # main
 filepath = "in/scaled_shapes.pgm"
 width, height, maxGrayLevel, pixels = readPGM(filepath)
 
-centralMoment20 = centralMoments(pixels, 2, 0, width, height)
-centralMoment02 = centralMoments(pixels, 0, 2, width, height)
+color = [0, 80, 120, 160, 200]
+print(f"{'Object':^10} {'Gray Level':^12} {'Central Moment20':^18} {'Central Moment02':^18} {'Phi1':^10}")
+print('-' * 72)
 
-print(quantity(centralMoment20, centralMoment02))
+for i, c in enumerate(color):
+    mu20 = centralMoments(pixels, 2, 0, width, height, c)
+    mu02 = centralMoments(pixels, 0, 2, width, height, c)
+    eta20 = normalizedMoments(pixels, 2, 0, width, height, c)
+    eta02 = normalizedMoments(pixels, 0, 2, width, height, c)
+    
+    print(f"{i+1:^10} {c:^12} {mu20:^18.2f} {mu02:^18.2f} {phi1(eta20, eta02):^10.2f}")
+

@@ -159,8 +159,8 @@ def excessGreen(num, channels):
     g = channels['g']
     b = channels['b']
     multiG = combineNumAndList(num, '*', g)
-    rbDiff = combineLists(r,'-', b)
-    excessGreen = combineLists(multiG, '-' , rbDiff)
+    multiGDiffRed = combineLists(multiG, '-', r)
+    excessGreen = combineLists(multiGDiffRed, '-', b)
     
     return excessGreen
 
@@ -180,8 +180,8 @@ def excessBlue(num, channels):
     g = channels['g']
     b = channels['b']
     multiB = combineNumAndList(num, '*', b)
-    grDiff = combineLists(g,'-', r)
-    excessBlue = combineLists(multiB, '-' , grDiff)
+    multiBDiffGreen = combineLists(multiB, '-', g)
+    excessBlue = combineLists(multiBDiffGreen, '-', r)
     
     return excessBlue
 
@@ -201,8 +201,8 @@ def excessRed(num, channels):
     g = channels['g']
     b = channels['b']
     multiR = combineNumAndList(num, '*', r)
-    bgDiff = combineLists(b,'-', g)
-    excessRed = combineLists(multiR, '-' , bgDiff)
+    multiRDiffBlue = combineLists(multiR, '-', b)
+    excessRed = combineLists(multiRDiffBlue, '-', g)
     
     return excessRed
 
@@ -269,14 +269,18 @@ channels = {'r': r, 'g': g, 'b': b}
 excessGreen2 = excessGreen(2, channels)
 excessGreen3 = excessGreen(3, channels)
 excessGreen5 = excessGreen(5, channels)
+
 excessBlue2 = excessBlue(2, channels)
 excessBlue3 = excessBlue(3, channels)
 excessBlue5 = excessBlue(5, channels)
+
 excessRed2 = excessRed(2, channels)
 excessRed3 = excessRed(3, channels)
 excessRed5 = excessRed(5, channels)
-rbDiff = combineLists(combineLists(r,'-', b), '-', g)
-intensityChannel = intensity(1/3, channels)
+
+# rbDiff = combineLists(combineLists(r,'-', b), '-', g)
+# intensityChannel = intensity(1/3, channels)
+
 rgAdd = combineLists(r, '+', g)
 gbAdd = combineLists(g, '+', b)
 addAll = combineLists(rgAdd, '+', b)
